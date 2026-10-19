@@ -10,7 +10,7 @@ if not game:IsLoaded() then game.Loaded:Wait() end
 if not syn or not protectgui then getgenv().protectgui = function() end end
 
 -- URL репозитория
-local REPO_URL = "https://raw.githubusercontent.com/ShutUpRimuru/BloxFruitsAimBot/refs/heads/main/"
+local REPO_URL = "https://raw.githubusercontent.com/xKaizoReturns/e/refs/heads/main/"
 
 -- Система загрузки модулей с кешированием
 local ModuleCache = {}
@@ -21,7 +21,14 @@ local function LoadModule(moduleName)
     end
     
     local success, result = pcall(function()
-        local moduleCode = game:HttpGet(REPO_URL .. "modules/" .. moduleName .. ".lua")
+        local moduleCode
+        if readfile and isfile and isfile("Context/modules/" .. moduleName .. ".lua") then
+            moduleCode = readfile("Context/modules/" .. moduleName .. ".lua")
+        elseif readfile and isfile and isfile(moduleName .. ".lua") then
+            moduleCode = readfile(moduleName .. ".lua")
+        else
+            moduleCode = game:HttpGet(REPO_URL .. "modules/" .. moduleName .. ".lua")
+        end
         return loadstring(moduleCode)()
     end)
     

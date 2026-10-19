@@ -151,7 +151,7 @@ function GUI:CreateInterface()
     ServerGroup:AddButton({
         Text = 'Join by Job ID',
         Func = function()
-            local jobId = self.Library.Options.JobIdInput.Value
+            local jobId = Options.JobIdInput.Value
             if jobId and jobId ~= '' then
                 pcall(function()
                     self.Core.Services.TeleportService:TeleportToPlaceInstance(game.PlaceId, jobId, self.Core.LocalPlayer)
@@ -215,81 +215,86 @@ function GUI:CreateInterface()
 end
 
 function GUI:SetupEventHandlers()
+    local Toggles = getgenv().Toggles or Toggles
+    local Options = getgenv().Options or Options
+
     -- AimBot event handlers
-    self.Library.Toggles.AimBotEnabled:OnChanged(function() 
-        self.Core.Config.AimBot.Enabled = self.Library.Toggles.AimBotEnabled.Value 
+    Toggles.AimBotEnabled:OnChanged(function() 
+        self.Core.Config.AimBot.Enabled = Toggles.AimBotEnabled.Value 
     end)
     
-    self.Library.Options.AimBotMethod:OnChanged(function() 
-        self.Core.Config.AimBot.Method = self.Library.Options.AimBotMethod.Value 
+    Options.AimBotMethod:OnChanged(function() 
+        self.Core.Config.AimBot.Method = Options.AimBotMethod.Value 
     end)
     
-    self.Library.Toggles.ShowFOV:OnChanged(function() 
-        self.Core.Config.AimBot.ShowFOV = self.Library.Toggles.ShowFOV.Value 
+    Toggles.ShowFOV:OnChanged(function() 
+        self.Core.Config.AimBot.ShowFOV = Toggles.ShowFOV.Value 
     end)
     
-    self.Library.Toggles.CheckNPC:OnChanged(function() 
-        self.Core.Config.AimBot.CheckNPC = self.Library.Toggles.CheckNPC.Value 
+    Toggles.CheckNPC:OnChanged(function() 
+        self.Core.Config.AimBot.CheckNPC = Toggles.CheckNPC.Value 
     end)
     
-    self.Library.Toggles.Gun:OnChanged(function() 
-        self.Core.Config.AimBot.Gun = self.Library.Toggles.Gun.Value 
+    Toggles.Gun:OnChanged(function() 
+        self.Core.Config.AimBot.Gun = Toggles.Gun.Value 
     end)
     
     -- Soru event handlers
-    self.Library.Toggles.SoruEnabled:OnChanged(function() 
-        self.Core.Config.Soru.Enabled = self.Library.Toggles.SoruEnabled.Value 
+    Toggles.SoruEnabled:OnChanged(function() 
+        self.Core.Config.Soru.Enabled = Toggles.SoruEnabled.Value 
     end)
     
     -- ESP event handlers
-    self.Library.Toggles.ESPEnabled:OnChanged(function() 
-        self.Core.Config.ESP.Enabled = self.Library.Toggles.ESPEnabled.Value 
+    Toggles.ESPEnabled:OnChanged(function() 
+        self.Core.Config.ESP.Enabled = Toggles.ESPEnabled.Value 
     end)
     
-    self.Library.Toggles.ShowBoxes:OnChanged(function() 
-        self.Core.Config.ESP.ShowBoxes = self.Library.Toggles.ShowBoxes.Value 
+    Toggles.ShowBoxes:OnChanged(function() 
+        self.Core.Config.ESP.ShowBoxes = Toggles.ShowBoxes.Value 
     end)
     
-    self.Library.Toggles.ShowNames:OnChanged(function() 
-        self.Core.Config.ESP.ShowName = self.Library.Toggles.ShowNames.Value 
+    Toggles.ShowNames:OnChanged(function() 
+        self.Core.Config.ESP.ShowName = Toggles.ShowNames.Value 
     end)
     
-    self.Library.Toggles.ShowHealth:OnChanged(function() 
-        self.Core.Config.ESP.ShowHealth = self.Library.Toggles.ShowHealth.Value 
+    Toggles.ShowHealth:OnChanged(function() 
+        self.Core.Config.ESP.ShowHealth = Toggles.ShowHealth.Value 
     end)
     
-    self.Library.Toggles.ShowDistance:OnChanged(function() 
-        self.Core.Config.ESP.ShowDistance = self.Library.Toggles.ShowDistance.Value 
+    Toggles.ShowDistance:OnChanged(function() 
+        self.Core.Config.ESP.ShowDistance = Toggles.ShowDistance.Value 
     end)
     
     -- Settings event handlers
-    self.Library.Toggles.AimAtCursor:OnChanged(function() 
-        self.Core.Config.AimBot.AimAtCursor = self.Library.Toggles.AimAtCursor.Value 
+    Toggles.AimAtCursor:OnChanged(function() 
+        self.Core.Config.AimBot.AimAtCursor = Toggles.AimAtCursor.Value 
     end)
     
-    self.Library.Toggles.PredictionEnabled:OnChanged(function() 
-        self.Core.Config.AimBot.Prediction.Enabled = self.Library.Toggles.PredictionEnabled.Value 
+    Toggles.PredictionEnabled:OnChanged(function() 
+        self.Core.Config.AimBot.Prediction.Enabled = Toggles.PredictionEnabled.Value 
     end)
     
-    self.Library.Options.PredictionStrength:OnChanged(function() 
-        self.Core.Config.AimBot.Prediction.Strength = self.Library.Options.PredictionStrength.Value 
+    Options.PredictionStrength:OnChanged(function() 
+        self.Core.Config.AimBot.Prediction.Strength = Options.PredictionStrength.Value 
     end)
     
-    self.Library.Options.MaxDistance:OnChanged(function() 
-        self.Core.Config.AimBot.Filtering.MaxDistance = self.Library.Options.MaxDistance.Value 
+    Options.MaxDistance:OnChanged(function() 
+        self.Core.Config.AimBot.Filtering.MaxDistance = Options.MaxDistance.Value 
     end)
     
-    self.Library.Options.FOVRadius:OnChanged(function() 
-        self.Core.Config.AimBot.FOVRadius = self.Library.Options.FOVRadius.Value 
+    Options.FOVRadius:OnChanged(function() 
+        self.Core.Config.AimBot.FOVRadius = Options.FOVRadius.Value 
     end)
 end
 
 function GUI:GetToggleValue(name)
-    return self.Library.Toggles[name] and self.Library.Toggles[name].Value or false
+    local Toggles = getgenv().Toggles or Toggles
+    return Toggles and Toggles[name] and Toggles[name].Value or false
 end
 
 function GUI:GetOptionValue(name)
-    return self.Library.Options[name] and self.Library.Options[name].Value or nil
+    local Options = getgenv().Options or Options
+    return Options and Options[name] and Options[name].Value or nil
 end
 
 return GUI
